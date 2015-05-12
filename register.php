@@ -57,7 +57,7 @@ if(empty($_POST) === false)
 <?php
 if(isset($_GET['success']) && empty($_GET['success']))
 {
-    echo "You have been registered successfully!";
+    echo "You have been registered successfully! Please check your email to activate your account.";
 }
 else
 {
@@ -68,7 +68,8 @@ else
             'password'      => $_POST['password'],
             'first_name'    => $_POST['first_name'],
             'last_name'     => $_POST['last_name'],
-            'e_mail'        => $_POST['e_mail']
+            'e_mail'        => $_POST['e_mail'],
+            'e_mail_code'   => md5($_POST['username'] +microtime())
         );  //this is end of array
 
         register_user($register_data);

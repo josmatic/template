@@ -1,4 +1,22 @@
 <?php
+function activate($email, $email_code)
+{
+    $email          = mysql_real_escape_string($email); //mysql_real_escape_string — Escapes special characters in a string for use in an SQL statement
+    $email_code     = mysql_real_escape_string($email_code);//mysql_real_escape_string
+
+    if(mysql_result(mysql_query("SELECT COUNT(`user_id`) FROM `users` WHERE `e_mail` = '$email' AND `e_mail_code` = '$email_code' AND `active` = 0"), 0) == 1)
+    {
+        mysql_query("UPDATE `users` SET `active` = 1 WHERE `e_mail` = $email");
+        echo "trueeeeee";
+        sleep(1);
+        return true;
+    }
+    else
+    {
+        echo "falseeeee";
+        return false;
+    }
+}
 function change_password($user_id, $password)
 {
     $user_id=(int)$user_id;    //simple sanatize user_id because that can be only integer
@@ -15,6 +33,8 @@ function register_user($register_data)
     //echo "fields:" . ($fields).'<br>'." and data: " . $data . '<br>';
 
     mysql_query("INSERT INTO `users` ($fields) VALUES ($data)");
+    email($register_data['e_mail'], 'Activate your account', "Hello " . $register_data['first_name'] .",\n\nYou need to activate your account, so use the link below:\n\nhttp://localhost/template/activate.php?e_mail=" . $register_data['e_mail'] . "&e_mail_code=" . $register_data['e_mail_code'] . "\n\n- Povezi me - by Josip Matic");
+
 }
 function user_count()   //return count active user (in database `active`=1)
 {
