@@ -1,6 +1,6 @@
 <?php
 include 'core/init.php';
-logged_in_redirect();
+//logged_in_redirect();
 include 'includes/overall/header.php';
 
 if(isset($_GET['success']) === true)
@@ -11,23 +11,18 @@ if(isset($_GET['success']) === true)
 <?php
 
 }
-if(isset($_GET['e_mail'] ) === true)//, $_GET['e_mail_code']
+
+if(isset($_GET['e_mail'], $_GET['e_mail_code']) ===true)    //
 {
     $email      = trim($_GET["e_mail"]);         //ADD SECURTY: trim remove any whitespaces "copy-paste"
     $email_code = trim($_GET['e_mail_code']);
-
-    //$email          = "josip-matic@hotmail.com";
-    //$email_code     = "7bd48fd08df08799b66755ccad3514b9";
-    echo $email.'<br>';
-    echo $email_code.'<br>';
-
-    //sleep(3);
 
     if(email_exists($email) === false)
     {
         $errors[] = "Oops, something went wrong, and we couldn't find that email address!";
     }
     /*PROVJERITI ACTIVATE!!!*/
+
     else if (activate($email, $email_code) === false)
     {
         $errors[] = "We had problems activating your account";

@@ -10,7 +10,7 @@ if (logged_in() === true)   //for true user is logged in
     $session_user_id = $_SESSION['user_id']; //we get 'user_id' for logged user
     $user_data = user_data($session_user_id, 'user_id', 'username', 'password', 'first_name', 'last_name', 'e_mail');
     /*user_data is function that send a parameters for query (and much more) for logged user*/
-    if(user_active($user_data['username']) === false) //false user isn't active (0 in database)
+    if(user_active($user_data['username']) === false) //false, user isn't active (0 in database)
     {
         session_destroy();
         header('Location: index.php');

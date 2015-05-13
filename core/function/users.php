@@ -4,11 +4,14 @@ function activate($email, $email_code)
     $email          = mysql_real_escape_string($email); //mysql_real_escape_string — Escapes special characters in a string for use in an SQL statement
     $email_code     = mysql_real_escape_string($email_code);//mysql_real_escape_string
 
-    if(mysql_result(mysql_query("SELECT COUNT(`user_id`) FROM `users` WHERE `e_mail` = '$email' AND `e_mail_code` = '$email_code' AND `active` = 0"), 0) == 1)
+    echo "activate email: " . $email . '<br>';
+    echo "activate email: " . $email_code .'<br>';
+
+    $result = mysql_query("SELECT COUNT(`user_id`) FROM `users` WHERE `e_mail`='$email' AND `e_mail_code`='$email_code' AND `active`=0");
+
+    if(mysql_result($result, 0)==1)
     {
-        mysql_query("UPDATE `users` SET `active` = 1 WHERE `e_mail` = $email");
-        echo "trueeeeee";
-        sleep(1);
+        echo "var_dump(activate):" . var_dump(mysql_query("UPDATE `users` SET `active` = 1 WHERE `e_mail` = '$email'"));
         return true;
     }
     else
